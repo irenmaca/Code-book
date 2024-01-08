@@ -1,0 +1,89 @@
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'activity' as Entity ,CAST(activity_id AS text) as Entity_ID from business.activity where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'agreement' as Entity ,CAST(agreement_id AS text) as Entity_ID from business.agreement where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'asset' as Entity ,CAST(asset_id AS text) as Entity_ID from business.asset where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'business_plan' as Entity ,CAST(business_plan_id AS text) as Entity_ID from business.business_plan where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'cashout' as Entity ,CAST(cashout_id AS text) as Entity_ID from business.cashout where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'dossier' as Entity ,CAST(dossier_id AS text) as Entity_ID from business.dossier where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'expense' as Entity ,CAST(expense_id AS text) as Entity_ID from business.expense where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'expense_provision' as Entity ,CAST(expense_provision_id AS text) as Entity_ID from business.expense_provision where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'guarantee' as Entity ,CAST(guarantee_id AS text) as Entity_ID from business.guarantee where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'legal_procedure' as Entity ,CAST(legal_procedure_id AS text) as Entity_ID from business.legal_procedure where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'loan' as Entity ,CAST(loan_id AS text) as Entity_ID from business.loan where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'mortgage' as Entity ,CAST(mortgage_id AS text) as Entity_ID from business.mortgage where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'real_estate' as Entity ,CAST(real_estate_id AS text) as Entity_ID from business.real_estate where dossier_id=260
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'resolution' as Entity ,CAST(resolution_id AS text) as Entity_ID from business.resolution where dossier_id=260
+                                    
+                                    --Las que NO dependen  directamente del DOSSIER:(18)
+                                    
+                                    --dossier_party_ref
+                                    union all 
+                                    select  '-' as parent_entity1, '-' as parent_entity2, 'address' as Entity ,CAST(address_id AS text) as Entity_ID from business.party_address_ref
+                                            where party_id in (select party_id from business.dossier_party_ref re where dossier_id=260)
+                                            
+                                    union all select  '-' as parent_entity1, '-' as parent_entity2, 'party_document' as Entity ,CAST(party_document_id AS text) as Entity_ID from business.party_document 
+                                        where party_id in (select party_id from business.dossier_party_ref re where dossier_id=260)
+                                    
+                                    --resolution
+                                    union all select  'resolution' as parent_entity1, '-' as parent_entity2, 'resolution_installment' as Entity ,CAST(resolution_installment_id AS text) as Entity_ID from business.resolution_installment     
+                                        where resolution_id in (select resolution_id from business.resolution where dossier_id=260)
+                                    
+                                    --expense_provision
+                                    union all select  'expense_provision' as parent_entity1, '-' as parent_entity2, 'expense_provision_trans' as Entity ,CAST(expense_provision_trans_id AS text) as Entity_ID from business.expense_provision_trans 
+                                        where expense_provision_id in (select expense_provision_id from business.expense_provision where dossier_id=260)
+                                        
+                                    --loan
+                                    union all select  'loan' as parent_entity1, '-' as parent_entity2, 'loan_debt_notification' as Entity ,CAST(loan_debt_notification_id AS text) as Entity_ID from business.loan_debt_notification 
+                                        where loan_id in (select loan_id from business.loan where dossier_id=260)
+                                    
+                                    union all select  'loan' as parent_entity1, '-' as parent_entity2, 'loan_deed' as Entity ,CAST(loan_deed_id AS text) as Entity_ID from business.loan_deed 
+                                        where loan_id in (select loan_id from business.loan where dossier_id=260)
+                                    
+                                    --real_estate
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_broker' as Entity ,CAST(re_broker_id AS text) as Entity_ID from business.re_broker 
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                    
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_budget' as Entity ,CAST(re_budget_id AS text) as Entity_ID from business.re_budget 
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                    
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_evaluation' as Entity ,CAST(re_evaluation_id AS text) as Entity_ID from business.re_evaluation  
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                    
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_key_movement' as Entity ,CAST(re_key_movement_id AS text) as Entity_ID from business.re_key_movement   
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                    
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_maintenance' as Entity ,CAST(re_maintenance_id AS text) as Entity_ID from business.re_maintenance    
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                    
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_offer' as Entity ,CAST(re_offer_id AS text) as Entity_ID from business.re_offer    
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                    
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_rental_contract' as Entity ,CAST(re_rental_contract_id AS text) as Entity_ID from business.re_rental_contract     
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                    
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_rental_offer' as Entity ,CAST(re_rental_offer_id AS text) as Entity_ID from business.re_rental_offer     
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                    
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_value' as Entity ,CAST(re_value_id AS text) as Entity_ID from business.re_value      
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                        
+                                    union all select  'real_estate' as parent_entity1, '-' as parent_entity2, 're_order' as Entity ,CAST(re_order_id AS text) as Entity_ID from business.re_order    
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260)
+                                        
+                                    --real_estate, re_order
+                                    union all select 'real_estate' as parent_entity1, 're_order' as parent_entity2, 're_order_extra' as Entity ,
+                                        CAST(re_order_extra_id AS text) as Entity_ID from business.re_order_extra 
+                                        where re_order_id in (select re_order_id from business.re_order    
+                                        where real_estate_id in (select real_estate_id from business.real_estate where dossier_id=260))
